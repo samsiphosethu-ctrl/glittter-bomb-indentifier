@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which Glitter Bomb Do You Have?</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #FFFFFF;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 24px 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1B3A2F;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.header p {
+    font-size: 15px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.question {
+    margin-bottom: 24px;
+}
+
+.question-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1B3A2F;
+    margin-bottom: 12px;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-btn {
+    background: #FFFFFF;
+    border: 2px solid #E8E8E8;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.option-btn:hover {
+    border-color: #1B3A2F;
+    background: #F9FAFA;
+}
+
+.option-btn.selected {
+    background: #1B3A2F;
+    color: #FFFFFF;
+    border-color: #1B3A2F;
+}
+
+.result {
+    display: none;
+    background: #F9FAFA;
+    border: 2px solid #1B3A2F;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 24px;
+}
+
+.result.show {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1B3A2F;
+    margin: 0 0 12px 0;
+}
+
+.result-text {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.6;
+    margin: 0 0 8px 0;
+}
+
+.result-text:last-child {
+    margin-bottom: 0;
+}
+
+.reset-btn {
+    background: #1B3A2F;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.reset-btn:hover {
+    background: #2A4F42;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .header h2 {
+        font-size: 21px;
+    }
+    
+    .container {
+        padding: 20px 16px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>Which Glitter Bomb Do You Have?</h2>
+        <p>Answer these questions to identify your version</p>
+    </div>
+    
+    <div id="quiz">
+        <!-- Question 1 -->
+        <div class="question" id="q1">
+            <div class="question-text">What THC % does your Glitter Bomb show?</div>
+            <div class="options">
+                <button class="option-btn" onclick="selectAnswer('q1', 'compound', this)">
+                    21-28% (most common at dispensaries)
+                </button>
+                <button class="option-btn" onclick="selectAnswer('q1', 'blimburn', this)">
+                    25-29% (consistent mid-range)
+                </button>
+                <button class="option-btn" onclick="selectAnswer('q1', 'compound', this)">
+                    30%+ (outlier batch)
+                </button>
+            </div>
+        </div>
+        
+        <!-- Question 2 -->
+        <div class="question hidden" id="q2">
+            <div class="question-text">What's the indica/sativa classification?</div>
+            <div class="options">
+                <button class="option-btn" onclick="selectAnswer('q2', 'compound', this)">
+                    70/30 indica-dominant or "mostly calming hybrid"
+                </button>
+                <button class="option-btn" onclick="selectAnswer('q2', 'blimburn', this)">
+                    50/50 balanced hybrid
+                </button>
+                <button class="option-btn" onclick="selectAnswer('q2', 'compound', this)">
+                    Not specified, just says "Hybrid"
+                </button>
+            </div>
+        </div>
+        
+        <!-- Question 3 -->
+        <div class="question hidden" id="q3">
+            <div class="question-text">What are the parent strains listed?</div>
+            <div class="options">
+                <button class="option-btn" onclick="selectAnswer('q3', 'compound', this)">
+                    Grape Gas #10 × OGKB Blueberry Headband
+                </button>
+                <button class="option-btn" onclick="selectAnswer('q3', 'blimburn', this)">
+                    MAC × Grape Gasoline
+                </button>
+                <button class="option-btn" onclick="selectAnswer('q3', 'unknown', this)">
+                    Not listed or unknown
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Results -->
+    <div id="result-compound" class="result">
+        <div class="result-title">✨ You Have: Compound Genetics Original</div>
+        <div class="result-text">
+            This is the El Chivo #5 selection bred by Compound Genetics in 2022. It's the version dominating dispensaries and generating cultural momentum.
+        </div>
+        <div class="result-text">
+            <strong>Key markers:</strong> Grape Gas #10 × OGKB Blueberry Headband genetics, 21-28% THC (with outliers to 30%+), myrcene-caryophyllene-linalool terpene profile, indica-leaning effects.
+        </div>
+        <button class="reset-btn" onclick="resetQuiz()">Try Again</button>
+    </div>
+    
+    <div id="result-blimburn" class="result">
+        <div class="result-title">🌿 You Have: Blimburn Seeds Version</div>
+        <div class="result-text">
+            This is Blimburn Seeds' Glitter Bomb, a completely different strain from the Compound Genetics original.
+        </div>
+        <div class="result-text">
+            <strong>Key markers:</strong> MAC × Grape Gasoline genetics, 25-29% THC, 50/50 balanced hybrid classification. This version has different parent strains and a different effect profile.
+        </div>
+        <button class="reset-btn" onclick="resetQuiz()">Try Again</button>
+    </div>
+    
+    <div id="result-unknown" class="result">
+        <div class="result-title">🤔 Uncertain / Need More Info</div>
+        <div class="result-text">
+            Without clear genetics listed, it's hard to confirm which version you have. Check with your dispensary or source for the breeder name and parent strains.
+        </div>
+        <div class="result-text">
+            <strong>What to ask for:</strong> "Is this the Compound Genetics version with Grape Gas #10 × OGKB Blueberry Headband genetics?"
+        </div>
+        <button class="reset-btn" onclick="resetQuiz()">Try Again</button>
+    </div>
+</div>
+
+<script>
+let answers = {
+    q1: null,
+    q2: null,
+    q3: null
+};
+
+let currentQuestion = 1;
+
+function selectAnswer(questionId, answer, button) {
+    // Store the answer
+    answers[questionId] = answer;
+    
+    // Visual feedback
+    const allButtons = button.parentElement.querySelectorAll('.option-btn');
+    allButtons.forEach(btn => btn.classList.remove('selected'));
+    button.classList.add('selected');
+    
+    // Move to next question or show result
+    setTimeout(() => {
+        if (currentQuestion < 3) {
+            document.getElementById('q' + currentQuestion).classList.add('hidden');
+            currentQuestion++;
+            document.getElementById('q' + currentQuestion).classList.remove('hidden');
+        } else {
+            showResult();
+        }
+    }, 300);
+}
+
+function showResult() {
+    // Hide quiz
+    document.getElementById('quiz').classList.add('hidden');
+    
+    // Calculate result based on answers
+    let compoundScore = 0;
+    let blimburnScore = 0;
+    
+    if (answers.q1 === 'compound') compoundScore++;
+    if (answers.q1 === 'blimburn') blimburnScore++;
+    
+    if (answers.q2 === 'compound') compoundScore++;
+    if (answers.q2 === 'blimburn') blimburnScore++;
+    
+    if (answers.q3 === 'compound') compoundScore += 2; // Genetics are definitive
+    if (answers.q3 === 'blimburn') blimburnScore += 2;
+    
+    // Show appropriate result
+    let resultId = 'result-unknown';
+    
+    if (answers.q3 === 'compound' || compoundScore > blimburnScore) {
+        resultId = 'result-compound';
+    } else if (answers.q3 === 'blimburn' || blimburnScore > compoundScore) {
+        resultId = 'result-blimburn';
+    }
+    
+    document.getElementById(resultId).classList.add('show');
+}
+
+function resetQuiz() {
+    // Reset answers
+    answers = { q1: null, q2: null, q3: null };
+    currentQuestion = 1;
+    
+    // Hide all results
+    document.querySelectorAll('.result').forEach(r => {
+        r.classList.remove('show');
+    });
+    
+    // Reset all buttons
+    document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    
+    // Show first question
+    document.getElementById('q1').classList.remove('hidden');
+    document.getElementById('q2').classList.add('hidden');
+    document.getElementById('q3').classList.add('hidden');
+    
+    // Show quiz
+    document.getElementById('quiz').classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>
